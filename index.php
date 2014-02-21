@@ -409,22 +409,22 @@ if (isset($_FILES) && $_FILES) {
                 </div>
                 <div class="clear"></div>
 
-                <h2>HTML5 Video Compatable</h2>
+                <h2>Output Formats</h2>
                 <div class="fieldset">
-                        <label>x264 (audio codec libfaac) </label>
+                        <label>MXF Op-1a </label>
                         <input type="checkbox" name="encoding_x264" checked="checked" class="checkbox" />
                 </div>
                 <div class="fieldset">
-                        <label>ogv (audio codec libvorbis) </label>
+                        <label>h264 Large</label>
                         <input type="checkbox" name="encoding_ogv"  checked="checked"  class="checkbox"/>
                 </div>
 
                 <div class="fieldset">
-                        <label>webm </label>
+                        <label>h264 Mobile</label>
                         <input type="checkbox" name="encoding_webm"  checked="checked" class="checkbox" />
                 </div>
                         <div class="fieldset">
-                        <label>Capture stills</label>
+                        <label>DVD Iso</label>
                         <input type="checkbox" name="encoding_stills"  checked="checked" class="checkbox" />
                 </div>
 
