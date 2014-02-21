@@ -309,8 +309,8 @@ if (isset($_FILES) && $_FILES) {
 </head>
 <body>
 
-        <h1>ffmpeg web gui</h1>
-        <?
+        <h1>alpha 0.1</h1>
+        <?php
         if ($error) {
                 echo '<div class="error">'.$error.'</div>';
         }
@@ -374,9 +374,9 @@ if (isset($_FILES) && $_FILES) {
                         <input type="checkbox" name="encoding_enable_audio" checked="checked" class="checkbox" />
                 </div>
 
-
-                <div class="fieldset">
-                        <label for="file">Audio sampling rate (in Hz):</label> <!-- -ar 44100 -->
+<!--
+               <div class="fieldset">
+                        <label for="file">Audio sampling rate (in Hz):</label> 
                         <select name="encoding_audio_sampling_rate">
                                 <option value="44100" selected="selected">44100 Mz</option>
                                 <option value="22050">22050 Mz</option>
@@ -385,7 +385,7 @@ if (isset($_FILES) && $_FILES) {
                 </div>
 
                 <div class="fieldset">
-                        <label for="file">Audio bitrate (kbps):</label> <!-- -ab 128k -->
+                        <label for="file">Audio bitrate (kbps):</label> 
                         <select name="encoding_audio_bitrate">
                                 <option value="320">320 kbps</option>
                                 <option value="256">256 kbps (DAB Quality)</option>
@@ -397,7 +397,7 @@ if (isset($_FILES) && $_FILES) {
                         </select>
                 </div>
                 
-                
+ -->               
                 
                 <div class="fieldset">
                         <label>Mixdown Stereo</label>
