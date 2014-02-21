@@ -53,7 +53,7 @@ $renderHTML5            = false;
 
 $newline                = "\n";
 $fileSplit              = '_';
-$timeStamp              = mktime();
+$timeStamp              = '10';  //mktime()
 $filePath               = realpath('./').'/';
 $webPath                = '/encoder/';
 $ffmpegCommand          = '/usr/local/bin/ffmpeg'; // x264, xbix, ora, gsm, lame, faac, swscale, 0.5
