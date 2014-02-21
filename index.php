@@ -68,11 +68,12 @@ if (isset($_FILES) && $_FILES) {
         // Custom Settings
 
         // Video
-        $videoSize              = isset($_POST['video_size'])                                   ? $_POST['video_size']          : '640x360';
-        $videoBitrate           = isset($_POST['video_bitrate'])                                ? (int)$_POST['video_bitrate']  : '700';
-        $videoFramerate         = isset($_POST['video_framerate'])                              ? (int)$_POST['video_framerate'] : '30';
+        $videoSize              = isset($_POST['video_size'])                   ? $_POST['video_size']                  : '640x360';
+        $videoBitrate           = isset($_POST['video_bitrate'])                ? (int)$_POST['video_bitrate']          : '700';
+        $videoFramerate         = isset($_POST['video_framerate'])              ? (int)$_POST['video_framerate']        : '25';
         $videoDeinterlace       = isset($_POST['encoding_video_deinterlace'])   ? 1 : 0 ;
-
+        // Dummy still do do Timecode Reader Module
+        $videoTimecode          = isset($_POST['video_timecode'])               ? 1 : 0 ;
         // Audio
         $audioEnabled           = isset($_POST['encoding_enable_audio'])                ? 1 : 0 ;
         $audioSamplerate        = isset($_POST['encoding_audio_sampling_rate']) ? (int)$_POST['encoding_audio_sampling_rate'] : '44100';
@@ -80,17 +81,17 @@ if (isset($_FILES) && $_FILES) {
         $audioChannels          = (isset($_POST['encoding_audio_channels']) && $_POST['encoding_audio_channels']        == 'stereo')    ? 2 : 1 ;
 
         // Build up the ffmpeg params from the values posted from the html form
-        $customParams  = ' -s '.$videoSize;                             // Format the video size
-        $customParams .= ' -b:v '.$videoBitrate.'k';            // Format the video bit rate
-        $customParams .= ' -r '.$videoFramerate;                        // Format the video frame rate
+        $customParams  = ' -s '.$videoSize;                                             // Format the video size
+        $customParams .= ' -b:v '.$videoBitrate.'k';                                    // Format the video bit rate
+        $customParams .= ' -r '.$videoFramerate;                                        // Format the video frame rate
 
         if ($videoDeinterlace) {
-                $customParams .= ' -deinterlace ';                              // Deinterlace the video
+                $customParams .= ' -deinterlace ';                                      // Deinterlace the video
         }
         if ($audioEnabled) {
-                $customParams .= ' -ar '.$audioSamplerate;              // Audio sample rate
-                $customParams .= ' -ab '.$audioBitrate.'k';             // Audio bit rate
-                $customParams .= ' -ac '.$audioChannels;                // Audio Channels
+                $customParams .= ' -ar '.$audioSamplerate;                              // Audio sample rate
+                $customParams .= ' -ab '.$audioBitrate.'k';                             // Audio bit rate
+                $customParams .= ' -ac '.$audioChannels;                                // Audio Channels
         }
         else
         {
@@ -214,31 +215,7 @@ if (isset($_FILES) && $_FILES) {
                                                 $renderHTML5 = true;
                                         }
 
-                                        /*
-
-                                           TODO
-
-                                                iPod / iPhone
-                                                -acodec aac -ab 128kb -vcodec mpeg4 -b 1200kb -mbd 2 -flags +4mv+trell -aic 2 -cmp 2 -subcmp 2 -s 320x180
-
-                                                PSP
-                                                -b:v 300-s 320x240 -vcodec xvid -ab 32 -ar 24000 -acodec aac fin
-
-                                                // Extracting sound from a video, and save it as Mp3
-                                                ffmpeg -i source_video.avi -vn -ar 44100 -ac 2 -ab 192 -f mp3 sound.mp3
-
-                                                Convert to animated gif(uncompressed)
-                                                ffmpeg -i video_origine.avi gif_anime.gif
-
-                                                Convert .avi to .flv
-                                                ffmpeg -i video_origine.avi -ab 56 -ar 44100 -b 200 -r 15 -s 320x240 -f flv
-
-                                                Convert .avi to mpeg for dvd players
-                                                ffmpeg -i temp.mp4 -target pal-dvd -ps 2000000000 -aspect 16:9 finale_video.mpeg
-
-                                                Compress .avi to divx
-                                                ffmpeg -i temp.avi -y -vcodec msmpeg4v2 video_finale.avi
-                                        */
+                             
 
                                         if ($renderHTML5) {
                                                 // Render the HTML5 Player in html
@@ -352,10 +329,10 @@ if (isset($_FILES) && $_FILES) {
                 <div class="fieldset">
                         <label for="file">Video Size:</label>  <!-- -b:v 700k-->
                         <select name="video_size">
-                                <option value="800x600">800x600 (4:3)</option>
-                                <option value="704x576">704x576</option>
-                                <option value="640x360">640x360 (16:9)</option>
-                                <option value="560x304" selected="selected">560x304</option>
+                                <option value="1920x1080" selected="selected">1920x1080</option>
+                                <option value="1280x720">1280x720</option>
+                                <option value="640x360">1024x576</option>
+                                <option value="560x304">560x304</option>
                                 <option value="512x384">512x384</option>
                                 <option value="400x300">400x300</option>
                                 <option value="320x240">320x240</option>
@@ -381,10 +358,8 @@ if (isset($_FILES) && $_FILES) {
                 <div class="fieldset">
                         <label for="file">Frame Rate:</label>  <!-- -b:v 700k-->
                         <select name="video_framerate">
-                                <option value="30" selected="selected">30 fps</option>
-                                <option value="25">25 fps/option>
-                                <option value="15">15 fps</option>
-                                <option value="12">12 fps</option>
+                                <option value="30">30 fps</option>
+                                <option value="25" selected="selected">25 fps</option>
                         </select>
                 </div>
 
@@ -421,13 +396,15 @@ if (isset($_FILES) && $_FILES) {
                                 <option value="32">8 kbps (Telephone quality)</option>
                         </select>
                 </div>
-
+                
+                
+                
                 <div class="fieldset">
-                        <label>Stereo</label>
+                        <label>Mixdown Stereo</label>
                         <input type="radio" name="encoding_audio_channels" checked="checked" value="stereo" class="checkbox"  />
                 </div>
                 <div class="fieldset">
-                        <label>Mono</label>
+                        <label>Stereo 1&2</label>
                         <input type="radio" name="encoding_audio_channels" value="mono" class="checkbox" />
                 </div>
                 <div class="clear"></div>
@@ -454,6 +431,7 @@ if (isset($_FILES) && $_FILES) {
                 <div class="clear"></div>
 
                 <!-- Todo
+                // Todo MXF 8 Track Mixdown Option 
                 <h2>Other Encodings</h2>
 
                 <div class="fieldset">
@@ -503,5 +481,7 @@ if (isset($_FILES) && $_FILES) {
 
 </body>
 </html>
+
+
 
 
