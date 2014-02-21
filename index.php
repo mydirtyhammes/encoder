@@ -44,7 +44,7 @@ set_time_limit(0);
 ini_set('display_errors','On');
 
 $maxFileSize = 107374182400; // 314572800; // 300MB
-$allowedMimeTypes = array('video/avi','video/mp4','video/mpeg','video/quicktime','video/x-msvideo','video/msvideo','video/x-ms-wmv','application/mxf','video/MP2T');
+$allowedMimeTypes = array('video/avi','video/x-matroska','video/mp4','video/mpeg','video/quicktime','video/x-msvideo','video/msvideo','video/x-ms-wmv','application/mxf','video/MP2T');
 
 $error                  = false;
 $uploadSuccess          = false;
