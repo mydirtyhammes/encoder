@@ -46,16 +46,16 @@ ini_set('display_errors','On');
 $maxFileSize = 107374182400; // 314572800; // 300MB
 $allowedMimeTypes = array('video/avi','video/mp4','video/mpeg','video/quicktime','video/x-msvideo','video/msvideo','video/x-ms-wmv','application/mxf','video/MP2T');
 
-$error                          = false;
+$error                  = false;
 $uploadSuccess          = false;
 $stillImages            = false;
 $renderHTML5            = false;
 
-$newline                        = "\n";
-$fileSplit                      = '_';
-$timeStamp                      = mktime();
-$filePath                       = realpath('./').'/';
-$webPath                        = '/ffmpeg_web_gui/';
+$newline                = "\n";
+$fileSplit              = '_';
+$timeStamp              = mktime();
+$filePath               = realpath('./').'/';
+$webPath                = '/encoder/';
 $ffmpegCommand          = '/usr/local/bin/ffmpeg'; // x264, xbix, ora, gsm, lame, faac, swscale, 0.5
 $qt_faststart           = '/usr/local/bin/qt-faststart';
 
